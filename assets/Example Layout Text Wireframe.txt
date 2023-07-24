@@ -1,0 +1,64 @@
+*OPENING TITLE PAGE*
+
+- header
+
+view high scores
+timer HIDDEN
+
+- section - opening
+h1 title of quiz
+p description of quiz
+button start quiz
+
+
+*QUESTIONS/ANSWERS*
+
+- header
+view high scores UNACTIVE
+timer ACTIVE
+
+- div - QAsection
+h1 question
+ul answers
+  li <button> answer1
+  li <button> answer2
+  li <button> answer3
+  li <button> answer4
+
+- footer
+h2 wrong or correct answer on previous question (appears after first question)
+
+
+*QUIZ COMPLETE*
+
+- header
+view high scores
+timer PAUSED
+
+- section - ending
+h1 Complete Message
+h2 Your final score is
+form 
+  label Enter initials:
+  input "type=text"
+  input "type=submit"
+
+
+
+*HIGH SCORE PAGE*
+
+- header
+view high scores HIDDEN
+timer HIDDEN
+
+- section - scores
+h1 High Scores
+ul
+  - li score 
+  - LIST INCREASES BASED ON NUMBER OF RUN THROUGHS
+button "Go back" - takes you back to OPENING TITLE PAGE
+button "Clear high scores" - gets rid of all high score local data
+
+
+
+
