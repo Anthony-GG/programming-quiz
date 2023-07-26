@@ -2,6 +2,7 @@
 //variable declarations to point to various elements on the page
 var window = document.querySelector('window');
 var highscore = document.getElementById("highscorebutton");
+var returnButton = document.getElementById("returnButton");
 var timer = document.getElementById("timercounter");
 var body = document.querySelector("body");
 var mainH1 = document.getElementById("mainH1");
@@ -18,8 +19,10 @@ var initialsInput = document.getElementById("initialsInput");
 
 //variable declarations for the total score to be saved and for the questions to be asked during the game
 let score = 1;
-//hides the ending so it doesn't appear until needed
+//hides the ending and clear button so it doesn't appear until needed
 clearSpecific(ending);
+clearSpecific(clearButton);
+clearSpecific(returnButton);
 
 //array declarations and initializations
 var questionList = [
@@ -152,6 +155,13 @@ highscore.addEventListener("click", function(){
     //Clears other aspects of the page that should not show up while showcasing the scores
     clearSpecific(mainP);
     clearSpecific(timer);
+    clearSpecific(highscore);
+    clearSpecific(startButton);
+
+    //shows hidden clear button
+    unclearSpecific(clearButton);
+    unclearSpecific(returnButton);
+
     //Changes the text value to better represent what the page is displaying
     mainH1.textContent= "High Scores:"
 
@@ -174,3 +184,8 @@ clearButton.addEventListener("click", function(){
     localStorage.clear();
     window.location.reload();
 });
+
+returnButton.addEventListener("click", function(){
+  window.location.reload();
+});
+
