@@ -26,7 +26,7 @@ clearSpecific(ending);
 clearSpecific(clearButton);
 clearSpecific(returnButton);
 
-//array declarations and initializations
+//array declarations and initializations for Question List
 var questionList = [
   ["A _______ is a way to store information to be later referenced and manipulated 	within a program.", ['variable', 'algorithm', 'array', 'loop'], "variable"],
   ["Which of the following is not an operating system?", ['Windows', 'Linux', 'Jellyfin', 'macOS'], "Jellyfin"],
@@ -35,7 +35,7 @@ var questionList = [
   ["What is an array?", ['a block of code that can be referenced by name to run the code it contains', 'a group of instructions given to a computer to be processed', 'a collection of code made by other programmers for you to import and use', 'a collection of items of same data type stored at contiguous memory locations'], "a collection of items of same data type stored at contiguous memory locations"]
 ];
 
-//CLEARS LOCAL STORAGE FOR DEBUG PURPOSES
+//CLEARS LOCAL STORAGE FOR DEBUG PURPOSES - now added in 'View High Scores' section
 //localStorage.clear();
 
 //Creates the sigh score list and readds any previous high scores that might have been reached previously
@@ -45,29 +45,29 @@ if (hsParse == null) {
 } else {
   var highScoreList = hsParse;
 }
-console.log(highScoreList);
+// console.log(highScoreList);
 
-console.log(questionList);
-//Console log example pointing to all the questions
-console.log("Questions:");
-console.log(questionList[0][0]) //Q1 q
-console.log(questionList[1][0]) //Q2 q
-console.log(questionList[2][0]) //Q3 q
-console.log(questionList[3][0]) //Q4 q
-console.log(questionList[4][0]) //Q5 q
-//Console log example pointing to answers for Q1 (this will need to cycle 5 times in total)
-console.log("Q1 Answers:");
-console.log(questionList[0][1][0]) //Q1 a1
-console.log(questionList[0][1][1]) //Q1 a2
-console.log(questionList[0][1][2]) //Q1 a3
-console.log(questionList[0][1][3]) //A1 a4
-//Console log example pointing to correct answers
-console.log("Correct Answers:");
-console.log(questionList[0][2]);
-console.log(questionList[1][2]);
-console.log(questionList[2][2]);
-console.log(questionList[3][2]);
-console.log(questionList[4][2]);
+// console.log(questionList);
+// //Console log example pointing to all the questions
+// console.log("Questions:");
+// console.log(questionList[0][0]) //Q1 q
+// console.log(questionList[1][0]) //Q2 q
+// console.log(questionList[2][0]) //Q3 q
+// console.log(questionList[3][0]) //Q4 q
+// console.log(questionList[4][0]) //Q5 q
+// //Console log example pointing to answers for Q1 (this will need to cycle 5 times in total)
+// console.log("Q1 Answers:");
+// console.log(questionList[0][1][0]) //Q1 a1
+// console.log(questionList[0][1][1]) //Q1 a2
+// console.log(questionList[0][1][2]) //Q1 a3
+// console.log(questionList[0][1][3]) //A1 a4
+// //Console log example pointing to correct answers
+// console.log("Correct Answers:");
+// console.log(questionList[0][2]);
+// console.log(questionList[1][2]);
+// console.log(questionList[2][2]);
+// console.log(questionList[3][2]);
+// console.log(questionList[4][2]);
 
 //PURPOSE: hides the specific element called and deletes the space it normally takes up 
 //PARAMETERS: element, an element that is currently unshown
@@ -86,14 +86,12 @@ function unclearSpecific(element) {
 function createQuestion() {
 
   questionList = shuffleArr(questionList);
-  console.log("Shuffled:");
-  console.log(questionList);
+  // console.log("Shuffled:");
+  // console.log(questionList);
 
   mainH1.textContent = questionList[0][0];
-  console.log("Please hit!")
   var questionsOl = document.createElement("ol");
   questionsDiv.appendChild(questionsOl);
-  console.log("Please hit! 2")
   //shuffles order of questions to be different each time they appear
   questionList[0][1] = shuffleArr(questionList[0][1]);
   questionList[0][1].forEach(function(option){
@@ -128,14 +126,6 @@ function setTime() {
     }
   }, 1000);
   createQuestion();
-  // createQuestion();
-  // createQuestion();
-  // createQuestion();
-  // createQuestion();
-  // questionList = shuffleArr(questionList);
-  // console.log("Shuffled:");
-  // console.log(questionList);
-  // mainH1.textContent = questionList[0][0];
 }
 
 //PURPOSE: a function that shuffles an array using the Fisher-Yates algorithm as it is less biased than standard Math.random practices according to research
@@ -152,17 +142,20 @@ function shuffleArr(arr){
   return arr;
 }
 
-
+//PURPOSE: a function that validates if the question clicked is correct or incorrect, giving out penalties or rewards and continues the game depending
+//PARAMETERS: event, an event from questionsDiv
+//RETURNS: NONE
 function answerValidation(event){
-  console.log(questionList[0][2])
-  console.log(event.target.textContent);
-  console.log(event.target.type);
+  // console.log(questionList[0][2])
+  // console.log(event.target.textContent);
+  // console.log(event.target.type);
   //Makes sure you are clicking on a submit button in the Ol
   if(event.target.type === 'submit'){
     //Checks to see if your answer is correct or incorrect
     if (event.target.textContent === questionList[0][2]) {
       event.target.style.backgroundColor = "green";
-      score+=5;
+      //gives points based on a random value of 1-5 plus the total seconds left divided by 6 (rounded down)
+      score+=(Math.floor(secondsLeft/6) + Math.floor(Math.random()*5));
       console.log("Your current score is: " + score);
       questionList.splice(0,1);
       if(questionList.length > 0){
@@ -229,6 +222,8 @@ highscore.addEventListener("click", function(){
     var i = 1;
     var highScoreUl = document.createElement("ul");
     highScoreDiv.appendChild(highScoreUl);
+    //Sorts values based on their scores rather than on their names
+    highScoreList.sort((a, b) => b[1] - a[1]);
     highScoreList.forEach(function(score){
       var listValue = i + ".    " + score[0] + ' - ' + score[1];
       console.log(listValue);
@@ -239,15 +234,6 @@ highscore.addEventListener("click", function(){
     });
     
 });
-
-
-//PURPOSE: clears all saved scores and refreshes the page
-//PARAMETERS: a click on the 'Clear Scores' button
-//RETURNS: NONE
-// correctButton.addEventListener("click", function(){
-//   answer = true;
-  
-// });
 
 //PURPOSE: clears all saved scores and refreshes the page
 //PARAMETERS: a click on the 'Clear Scores' button
