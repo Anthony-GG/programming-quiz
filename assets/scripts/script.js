@@ -117,6 +117,7 @@ function setTime() {
       clearInterval(timerInterval);
       // Calls function to create and append image
       unclearSpecific(ending);
+      highscore.style.visibility="";
       clearSpecific(questionsDiv);
       clearSpecific(mainH1);
       endingP.textContent = "Your final score was: " + score;
@@ -181,6 +182,7 @@ startButton.addEventListener("click", function(){
     score = 0;
     clearSpecific(opening);
     mainH1.style.margin = "10% 0% 0% 0%";
+    highscore.style.visibility="hidden";
     setTime();
 });
 
