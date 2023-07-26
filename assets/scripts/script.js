@@ -117,7 +117,7 @@ function setTime() {
       clearInterval(timerInterval);
       // Calls function to create and append image
       unclearSpecific(ending);
-      highscore.style.visibility="";
+      // highscore.style.visibility="";
       clearSpecific(questionsDiv);
       clearSpecific(mainH1);
       endingP.textContent = "Your final score was: " + score;
