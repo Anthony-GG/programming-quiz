@@ -1,9 +1,11 @@
 
 //variable declarations to point to various elements on the page
+var window = document.querySelector('window');
 var highscore = document.getElementById("highscorebutton");
 var timer = document.getElementById("timercounter");
 var body = document.querySelector("body");
 var mainH1 = document.getElementById("mainH1");
+var highScoreDiv = document.getElementById("highscoreul");
 var mainP = document.getElementById("mainP");
 var endingH1 = document.getElementById("endingH1");
 var endingP = document.getElementById("endingP");
@@ -11,6 +13,7 @@ var opening = document.getElementById("opening");
 var ending = document.getElementById("ending");
 var startButton = document.getElementById("startButton");
 var submitButton = document.getElementById("submitButton");
+var clearButton = document.getElementById("clearButton");
 var initialsInput = document.getElementById("initialsInput");
 
 //variable declarations for the total score to be saved and for the questions to be asked during the game
@@ -140,11 +143,34 @@ submitButton.addEventListener("click", function(event){
     initialsInput.value="";
     var savedHighScoreList = JSON.stringify(highScoreList);
     localStorage.setItem("savedHighScoreList", savedHighScoreList);
-    console.log(savedHighScoreList)
+    console.log(savedHighScoreList);
     console.log(highScoreList);
-    
+    window.location.reload();
 });
 //
 highscore.addEventListener("click", function(){
-    score++;
+    //Clears other aspects of the page that should not show up while showcasing the scores
+    clearSpecific(mainP);
+    clearSpecific(timer);
+    //Changes the text value to better represent what the page is displaying
+    mainH1.textContent= "High Scores:"
+
+    //iterates through high score function, creating and adding each string to a list
+    var i = 1;
+    var highScoreUl = document.createElement("ul");
+    highScoreDiv.appendChild(highScoreUl);
+    highScoreList.forEach(function(score){
+      var listValue = i + ".    " + score[0] + ' - ' + score[1];
+      console.log(listValue);
+      var listItem = document.createElement("li")
+      listItem.textContent = listValue;
+      highScoreUl.appendChild(listItem);
+      i++;
+    });
+    
+});
+
+clearButton.addEventListener("click", function(){
+    localStorage.clear();
+    window.location.reload();
 });

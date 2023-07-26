@@ -60,7 +60,33 @@ form{
     margin-top: 3%;
 }
 
-#startButton, #restartButton, #submitButton {
+
+#highscoreul {
+    text-align: center;
+}
+
+#highscoreul ul {
+    display: inline-block;
+    width: 50%;
+    font-size: 28px;
+    text-align: center;
+    background-color: var(--eerieglow);
+    border-radius: 25%;
+    border: 25px groove var(--darklunarblue);
+}
+
+#highscoreul li {
+    font-family: cursive;
+    list-style-type: none;
+    margin: 10px;
+    width: 50%;
+    margin-left: 25%;
+    letter-spacing: 10px;
+    background-color: black;
+    color: var(--moonrock);
+}
+
+#startButton, #restartButton, #submitButton, #clearButton {
     margin-top: 40px;
     background-color: var(--eerieglow);
     color: var(--darklunarblue);
