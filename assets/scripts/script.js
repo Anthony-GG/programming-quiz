@@ -31,10 +31,12 @@ var questionList = [
 //localStorage.clear();
 
 //Creates the sigh score list and readds any previous high scores that might have been reached previously
-var highScoreList = [];
 hsParse = JSON.parse(localStorage.getItem("savedHighScoreList"));
-console.log(hsParse);
-highScoreList.push(hsParse);
+if (hsParse == null) {
+  var highScoreList = [];
+} else {
+  var highScoreList = hsParse;
+}
 console.log(highScoreList);
 
 console.log(questionList);
