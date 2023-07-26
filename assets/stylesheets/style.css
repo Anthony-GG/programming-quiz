@@ -1,10 +1,11 @@
+/* Color variables used throughout the CSS */
 :root {
     --lunarblue: #2E9CFB;
     --darklunarblue: #04203A;
     --moonrock: #EEEEEE;
     --eerieglow:#FDDC74;
 }
-
+/* sets background of the page and text of all text to correct colors */
 * {
     background-color: var(--lunarblue);
     color: var(--moonrock);
@@ -55,6 +56,7 @@ form{
     font-family: cursive;
 }
 
+/* EDITS CSS ON SPECIFIC IDs */
 #opening, #ending{
     text-align: center;
     margin-top: 3%;
@@ -97,3 +99,4 @@ form{
     border-color: var(--darklunarblue);
     border-radius: 10px;
 }
+

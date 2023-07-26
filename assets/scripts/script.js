@@ -130,8 +130,8 @@ function shuffleArr(arr){
   return arr;
 }
 
-//PURPOSE: deletes elements from opening and adds/edits elements for the test
-//PARAMETERS: element, an element that is currently unshown
+//PURPOSE: starts the game and starts the timer
+//PARAMETERS: a click on the 'start button'
 //RETURNS: NONE
 startButton.addEventListener("click", function(){
     score = 0;
@@ -139,7 +139,9 @@ startButton.addEventListener("click", function(){
     mainH1.style.margin = "10% 0% 0% 0%";
     setTime();
 });
-//
+//PURPOSE: allows user to submit initials and score to the list to be displayed on the high score screen
+//PARAMETERS: a click on the 'submit' button
+//RETURNS: NONE
 submitButton.addEventListener("click", function(event){
     event.preventDefault();
     highScoreList.push([initialsInput.value, score])
@@ -150,7 +152,9 @@ submitButton.addEventListener("click", function(event){
     console.log(highScoreList);
     window.location.reload();
 });
-//
+//PURPOSE: displays all currently saved high scores to the user and allows them to clear said scores if they wish
+//PARAMETERS: a click on the 'high score' section
+//RETURNS: NONE
 highscore.addEventListener("click", function(){
     //Clears other aspects of the page that should not show up while showcasing the scores
     clearSpecific(mainP);
@@ -180,11 +184,17 @@ highscore.addEventListener("click", function(){
     
 });
 
+//PURPOSE: clears all saved scores and refreshes the page
+//PARAMETERS: a click on the 'Clear Scores' button
+//RETURNS: NONE
 clearButton.addEventListener("click", function(){
     localStorage.clear();
     window.location.reload();
 });
 
+//PURPOSE: takes user back to beginning of quiz by refreshing the page
+//PARAMETERS: a click on the 'return' button
+//RETURNS: NONE
 returnButton.addEventListener("click", function(){
   window.location.reload();
 });
