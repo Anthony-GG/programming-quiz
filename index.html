@@ -17,10 +17,21 @@
   <span id="timercounter">Timer: </span>
 </header>
 
-<section id="opening">
   <h1 id="mainH1">Programming Quiz</h1>
-  <p>This is an example paragraph for the description of the overall quiz.</p>
+<section id="opening">
+  <p id="mainP">This is an example paragraph for the description of the overall quiz.</p>
   <button type="button" id="startButton">Start Quiz</button>
+</section>
+
+<section id="ending">
+  <h1 id = "endingH1">All done!</h1>
+  <p id="endingP"></p>
+  <form action="/action_page.php">
+  <label for="initials">Initials: </label>
+  <input type="text" id="initialsInput" name="initials" maxlength="4" size="4" style="text-align: center;">
+  </form>
+  <button type="button" onClick="window.location.reload();"id="restartButton">Try Again</button>
+  <button type="button" id="submitButton">Submit</button>
 </section>
   
 
