@@ -15,7 +15,6 @@ var initialsInput = document.getElementById("initialsInput");
 
 //variable declarations for the total score to be saved and for the questions to be asked during the game
 let score = 1;
-
 //hides the ending so it doesn't appear until needed
 clearSpecific(ending);
 
@@ -28,9 +27,15 @@ var questionList = [
   ["What is an array?", ['a block of code that can be referenced by name to run the code it contains', 'a group of instructions given to a computer to be processed', 'a collection of code made by other programmers for you to import and use', 'a collection of items of same data type stored at contiguous memory locations'], "a collection of items of same data type stored at contiguous memory locations"]
 ];
 
+//CLEARS LOCAL STORAGE FOR DEBUG PURPOSES
+//localStorage.clear();
+
+//Creates the sigh score list and readds any previous high scores that might have been reached previously
 var highScoreList = [];
-hsParse = localStorage.getItem("savedHighScoreList");
-highScoreList = JSON.parse(hsParse);
+hsParse = JSON.parse(localStorage.getItem("savedHighScoreList"));
+console.log(hsParse);
+highScoreList.push(hsParse);
+console.log(highScoreList);
 
 console.log(questionList);
 //Console log example pointing to all the questions
@@ -131,7 +136,7 @@ submitButton.addEventListener("click", function(event){
     event.preventDefault();
     highScoreList.push([initialsInput.value, score])
     initialsInput.value="";
-    const savedHighScoreList = JSON.stringify(highScoreList);
+    var savedHighScoreList = JSON.stringify(highScoreList);
     localStorage.setItem("savedHighScoreList", savedHighScoreList);
     console.log(savedHighScoreList)
     console.log(highScoreList);
