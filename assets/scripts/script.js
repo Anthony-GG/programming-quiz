@@ -7,6 +7,7 @@ var timer = document.getElementById("timercounter");
 var body = document.querySelector("body");
 var mainH1 = document.getElementById("mainH1");
 var highScoreDiv = document.getElementById("highscoreul");
+var questionsDiv = document.getElementById("questionsol");
 var mainP = document.getElementById("mainP");
 var endingH1 = document.getElementById("endingH1");
 var endingP = document.getElementById("endingP");
@@ -19,6 +20,7 @@ var initialsInput = document.getElementById("initialsInput");
 
 //variable declarations for the total score to be saved and for the questions to be asked during the game
 let score = 1;
+var answer = false;
 //hides the ending and clear button so it doesn't appear until needed
 clearSpecific(ending);
 clearSpecific(clearButton);
@@ -27,7 +29,7 @@ clearSpecific(returnButton);
 //array declarations and initializations
 var questionList = [
   ["A _______ is a way to store information to be later referenced and manipulated 	within a program.", ['variable', 'algorithm', 'array', 'loop'], "variable"],
-  ["Which of the following is not an operating system?", ['Windows', 'Linux', 'Jellyfin', 'loop'], "macOS"],
+  ["Which of the following is not an operating system?", ['Windows', 'Linux', 'Jellyfin', 'macOS'], "Jellyfin"],
   ["The term 'FANG' refers to the stocks of four popular American technology companies. Which of the following was most recently included in 2017?", ['Amazon', 'Netflix', 'TikTok', 'Apple'], "Apple"],
   ["Which of the following is the most in demand and popular programming languages in the current year of 2023?", ['Python', 'Javascript', 'C++', 'Java'], "Javascript"],
   ["What is an array?", ['a block of code that can be referenced by name to run the code it contains', 'a group of instructions given to a computer to be processed', 'a collection of code made by other programmers for you to import and use', 'a collection of items of same data type stored at contiguous memory locations'], "a collection of items of same data type stored at contiguous memory locations"]
@@ -82,13 +84,29 @@ function unclearSpecific(element) {
 }
 
 function createQuestion() {
-    clearAll();
-    unclearSpecific(body);
-    unclearSpecific(mainH1);
-    
+
+  questionList = shuffleArr(questionList);
+  console.log("Shuffled:");
+  console.log(questionList);
+
+  mainH1.textContent = questionList[0][0];
+  console.log("Please hit!")
+  var questionsOl = document.createElement("ol");
+  questionsDiv.appendChild(questionsOl);
+  console.log("Please hit! 2")
+  //shuffles order of questions to be different each time they appear
+  questionList[0][1] = shuffleArr(questionList[0][1]);
+  questionList[0][1].forEach(function(option){
+    var listValue = option;
+    var listItem = document.createElement("button")
+    listItem.textContent = listValue;
+    questionsOl.appendChild(listItem);
+  });
+  mainH1.textContent = questionList[0][0];
+  // questionList.splice(0,1);
 }
 
-var secondsLeft = 3;
+var secondsLeft = 60;
 
 function setTime() {
   // Sets interval in variable
@@ -96,24 +114,28 @@ function setTime() {
     secondsLeft--;
     timer.textContent = "Timer: " + secondsLeft;
 
-    if(secondsLeft === 0) {
+    if(secondsLeft === 0 || secondsLeft < 0) {
       // Stops execution of action at set interval
       clearInterval(timerInterval);
       // Calls function to create and append image
-      // unclearSpecific(opening);
       unclearSpecific(ending);
+      clearSpecific(questionsDiv);
       clearSpecific(mainH1);
-      // clearSpecific(startButton);
-      // mainH1.textContent = "All done!";
       endingP.textContent = "Your final score was: " + score;
       mainH1.style.margin = "15% 0% 0% 0%";
-      secondsLeft = 10;
+      secondsLeft = 60;
+      timer.textContent = "Timer: ";
     }
   }, 1000);
-  questionList = shuffleArr(questionList);
-  console.log("Shuffled:");
-  console.log(questionList);
-  mainH1.textContent = questionList[0][0];
+  createQuestion();
+  // createQuestion();
+  // createQuestion();
+  // createQuestion();
+  // createQuestion();
+  // questionList = shuffleArr(questionList);
+  // console.log("Shuffled:");
+  // console.log(questionList);
+  // mainH1.textContent = questionList[0][0];
 }
 
 //PURPOSE: a function that shuffles an array using the Fisher-Yates algorithm as it is less biased than standard Math.random practices according to research
@@ -130,6 +152,35 @@ function shuffleArr(arr){
   return arr;
 }
 
+
+function answerValidation(event){
+  console.log(questionList[0][2])
+  console.log(event.target.textContent);
+  console.log(event.target.type);
+  //Makes sure you are clicking on a submit button in the Ol
+  if(event.target.type === 'submit'){
+    //Checks to see if your answer is correct or incorrect
+    if (event.target.textContent === questionList[0][2]) {
+      event.target.style.backgroundColor = "green";
+      score+=5;
+      console.log("Your current score is: " + score);
+      questionList.splice(0,1);
+      if(questionList.length > 0){
+        while(event.currentTarget.firstChild){
+          event.currentTarget.removeChild(event.currentTarget.firstChild);
+        }
+        createQuestion();
+      } else {
+        secondsLeft = 0;
+      }
+    } else {;
+      event.target.style.backgroundColor = "red";
+      secondsLeft -= 5;
+      timer.textContent = "Timer: " + secondsLeft;
+    }
+  }
+}
+
 //PURPOSE: starts the game and starts the timer
 //PARAMETERS: a click on the 'start button'
 //RETURNS: NONE
@@ -139,6 +190,11 @@ startButton.addEventListener("click", function(){
     mainH1.style.margin = "10% 0% 0% 0%";
     setTime();
 });
+
+//generic event listener for generated questions, passes to answer validation
+questionsDiv.addEventListener("click", answerValidation, false);
+
+
 //PURPOSE: allows user to submit initials and score to the list to be displayed on the high score screen
 //PARAMETERS: a click on the 'submit' button
 //RETURNS: NONE
@@ -183,6 +239,15 @@ highscore.addEventListener("click", function(){
     });
     
 });
+
+
+//PURPOSE: clears all saved scores and refreshes the page
+//PARAMETERS: a click on the 'Clear Scores' button
+//RETURNS: NONE
+// correctButton.addEventListener("click", function(){
+//   answer = true;
+  
+// });
 
 //PURPOSE: clears all saved scores and refreshes the page
 //PARAMETERS: a click on the 'Clear Scores' button

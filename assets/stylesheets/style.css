@@ -63,7 +63,7 @@ form{
 }
 
 
-#highscoreul {
+#highscoreul, #questionsol {
     text-align: center;
 }
 
@@ -83,6 +83,26 @@ form{
     margin: 10px;
     width: 50%;
     margin-left: 25%;
+    letter-spacing: 10px;
+    background-color: black;
+    color: var(--moonrock);
+}
+
+#questionsol ol {
+    display: inline-block;
+    width: 50%;
+    font-size: 28px;
+    text-align: center;
+    background-color: var(--eerieglow);
+    border-radius: 25%;
+    border: 25px groove var(--darklunarblue);
+}
+
+#questionsol button {
+    font-family: cursive;
+    list-style: circle;
+    margin: 10px;
+    width: 50%;
     letter-spacing: 10px;
     background-color: black;
     color: var(--moonrock);
